@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <title>genesis login</title>
+  </head>
+  <body>
+    <h1 id="theheading">Redirecting...</h1>
+    <p>Go to <code>/setup</code> to modify your configuration</p>
+    <form
+      action="https://students.c2.genesisedu.net/bernardsboe/sis/j_security_check"
+      method="POST"
+      id="theform"
+    >
+      <input type="hidden" id="username" name="j_username" />
+      <input type="hidden" id="password" name="j_password" />
+    </form>
+  </body>
+  <script>
+    const theform = document.getElementById("theform");
+    const theheading = document.getElementById("theheading");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const config = JSON.parse(localStorage.getItem("config"));
+    if (config?.username && config?.password) {
+      usernameInput.value = config.username;
+      passwordInput.value = config.password;
+      if (config?.loginURL) {
+        theform.action = config.loginURL;
+      }
+      theform.submit();
+    } else {
+      theheading.innerText = "Bad Config";
+      setTimeout(() => {
+        window.location.href = "/setup.html";
+      }, 2000);
+    }
+  </script>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <title>QuickGenesis Setup</title>
+  </head>
+  <body>
+    <h1>Setup</h1>
+    <p>Type your credentials and optionally a login URL</p>
+    <input type="text" name="username" id="username" placeholder="Username" />
+    <input
+      type="password"
+      name="password"
+      id="password"
+      placeholder="Password"
+    />
+    <input
+      type="text"
+      name="loginURL"
+      id="loginURL"
+      placeholder="Login URL (optional)"
+    />
+    <button onclick="save()">Save</button>
+    <button onclick="go()">Go</button>
+  </body>
+  <script>
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const loginURLInput = document.getElementById("loginURL");
+    function save() {
+      localStorage.setItem(
+        "config",
+        JSON.stringify({
+          username: usernameInput.value,
+          password: passwordInput.value,
+          loginURL: loginURLInput.value,
+        })
+      );
+    }
+    function go() {
+      window.location.href = "/";
+    }
+    function presetConfig() {
+      const config = JSON.parse(localStorage.getItem("config"));
+      if (config) {
+        usernameInput.value = config.username;
+        passwordInput.value = config.password;
+        loginURLInput.value = config.loginURL;
+      }
+    }
+    presetConfig();
+  </script>
+</html>
